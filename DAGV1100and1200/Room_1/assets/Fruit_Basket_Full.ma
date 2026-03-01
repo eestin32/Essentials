@@ -1,6 +1,6 @@
 //Maya ASCII 2025ff03 scene
-//Name: Organic_Prop.ma
-//Last modified: Sat, Feb 28, 2026 10:00:59 PM
+//Name: Fruit_Basket_Full.ma
+//Last modified: Sat, Feb 28, 2026 10:01:18 PM
 //Codeset: 1252
 requires maya "2025ff03";
 requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" -nodeType "aiImagerDenoiserOidn"
@@ -17,7 +17,7 @@ fileInfo "product" "Maya 2025";
 fileInfo "version" "2025";
 fileInfo "cutIdentifier" "202512041342-b90de33065";
 fileInfo "osv" "Windows 11 Home v2009 (Build: 26200)";
-fileInfo "UUID" "2732F1C8-437F-D90A-0E0F-90A43FD29789";
+fileInfo "UUID" "5566A611-4A20-AF5B-2F44-72A830D9775D";
 createNode transform -s -n "persp";
 	rename -uid "49E2F9C7-48F1-DCFB-F9A1-0BB046DC20FC";
 	setAttr ".v" no;
@@ -16200,4 +16200,4 @@ connectAttr "groupId167.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId168.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId169.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId170.msg" ":initialShadingGroup.gn" -na;
-// End of Organic_Prop.ma
+// End of Fruit_Basket_Full.ma
