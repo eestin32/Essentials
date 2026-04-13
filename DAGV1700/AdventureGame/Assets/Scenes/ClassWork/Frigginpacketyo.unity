@@ -645,7 +645,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 729272334}
-        m_TargetAssemblyTypeName: SimpleImageBehaviour, Assembly-CSharp
+        m_TargetAssemblyTypeName: UpdatedImageBehavior, Assembly-CSharp
         m_MethodName: UpdateWithFloatData
         m_Mode: 1
         m_Arguments:
@@ -1134,6 +1134,7 @@ GameObject:
   - component: {fileID: 157655395}
   - component: {fileID: 157655396}
   - component: {fileID: 157655397}
+  - component: {fileID: 157655398}
   m_Layer: 3
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -1164,13 +1165,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157655389}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e8cbbe35153640cea23bf58a428eab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 2
+  jumpForce: 1
   gravity: -9.81
 --- !u!143 &157655392
 CharacterController:
@@ -1362,6 +1363,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.2, z: 1}
   m_Center: {x: 0, y: -0.15, z: 0}
+--- !u!114 &157655398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157655389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762b3d282695c274cafca8a4935b6229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpForce: 2
+  gravity: -9.81
 --- !u!1 &196670305
 GameObject:
   m_ObjectHideFlags: 0
@@ -7333,7 +7349,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 729272330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf1b3746124a41cd90cb0e79f73be2a, type: 3}
+  m_Script: {fileID: 11500000, guid: e344ad72b58fd14408820b237315d92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dataObj: {fileID: 11400000, guid: eb0417868b150364590a2f19f1ad7087, type: 2}
@@ -15210,7 +15226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218790668945001508, guid: 4abe000626608c54bbf418d880b27dea, type: 3}
       propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SimpleImageBehaviour, Assembly-CSharp
+      value: UpdatedImageBehavior, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7218790668945001508, guid: 4abe000626608c54bbf418d880b27dea, type: 3}
       propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -15322,8 +15338,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3650855108412585260, guid: 23ea5bd2494f2284696a4a0ecc3725d5, type: 3}
+      propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateWithFloatData
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650855108412585260, guid: 23ea5bd2494f2284696a4a0ecc3725d5, type: 3}
       propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
       value: Emit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650855108412585260, guid: 23ea5bd2494f2284696a4a0ecc3725d5, type: 3}
+      propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UpdatedImageBehavior, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3650855108412585260, guid: 23ea5bd2494f2284696a4a0ecc3725d5, type: 3}
       propertyPath: triggerEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
