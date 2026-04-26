@@ -41,9 +41,13 @@ public class UpdatedCharacterController : MonoBehaviour
     private void Update()
     {
         MoveCharacter();
-        controller.Move(velocity * Time.deltaTime);
         ApplyGravity();
         KeepCharacterOnXAxis();
+        if(controller.isGrounded)
+        {
+            jumpCount = 0;
+        }
+        UnityEngine.Debug.Log(controller.isGrounded);
     }
 
     /// <summary>
@@ -78,7 +82,6 @@ public class UpdatedCharacterController : MonoBehaviour
         {
             // Reset vertical velocity when on the ground
             velocity.y = 0f;
-            jumpCount = 0;
         }
 
         // Apply velocity
