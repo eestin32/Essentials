@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 /// <summary>
@@ -29,7 +30,7 @@ public class UpdatedCharacterController : MonoBehaviour
         centerTransform,
         thisTransform;
     private Sprite sprite;
-    private int jumpCount = 0;
+    public int jumpCount = 0;
     private int maxJumps = 2;
     public KeyCode right = KeyCode.RightArrow;
     public KeyCode left = KeyCode.LeftArrow;
@@ -67,11 +68,11 @@ public class UpdatedCharacterController : MonoBehaviour
         velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         animator.SetTrigger("Jump");
 
-        if(jumpCount == 0)
+        if(controller.isGrounded)
         {
             sound.PlayOneShot(jumpSound);
         }
-        else if(jumpCount == 1)
+        else
         {
             sound.PlayOneShot(doubleJumpSound);
             jumpParticles.Emit(50);
