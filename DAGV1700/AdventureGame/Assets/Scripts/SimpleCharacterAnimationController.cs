@@ -3,20 +3,22 @@ using UnityEngine;
 public class SimpleCharacterAnimationController : MonoBehaviour
 {
     public CharacterController controller;
+    public UpdatedCharacterController player;
     private Animator animator;
+    public AudioClip landSound;
+    private AudioSource sound;
     private readonly int 
-        run = Animator.StringToHash("Run"),
+        move = Animator.StringToHash("Move"),
         idle = Animator.StringToHash("Idle"),
         jump = Animator.StringToHash("Jump"),
-        wallJump = Animator.StringToHash("WallJump"),
-        fall = Animator.StringToHash("Fall");
+        fall = Animator.StringToHash("Fall"),
+        land = Animator.StringToHash("Land");
 
     private void Start()
     {
         // Cache the Animator component attached to CharacterArt
         animator = GetComponent<Animator>();
-        //controller in parent object
-        controller = GetComponentInParent<CharacterController>();
+        sound = GetComponentInParent<AudioSource>();
     }
 
     private void Update()
@@ -26,32 +28,45 @@ public class SimpleCharacterAnimationController : MonoBehaviour
 
     private void HandleAnimations()
     {
-        float verticalMove = Input.GetAxisRaw("Vertical");
-        float horizontalMove = Input.GetAxisRaw("Horizontal");
+        Vector2 velocity = new Vector2(player.velocity.x, player.velocity.y);
+        float horizontalMove = player.moveDirection;
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if(controller.isGrounded)
         {
-            animator.SetBool(jump, true);
-        }
-        else if (!(controller.isGrounded) && verticalMove < 0)
-        {
-            animator.SetBool(jump, false);
-            animator.SetBool(fall, true);
-        }
-        else if (controller.isGrounded && animator.GetBool("Fall"))
-        {
-            animator.SetBool(fall, false);
-        }
-
-        if (Mathf.Abs(horizontalMove) > 0)
-        {
-            animator.SetBool(run, true);
-            animator.SetBool(idle, false);
+            animator.SetBool(land, false);
+            if(!(horizontalMove == 0))
+            {
+                animator.SetBool(move, true);
+                animator.SetBool(idle, false);
+            }
+            else
+            {
+                animator.SetBool(idle, true);
+                animator.SetBool(move, false);
+            }
         }
         else
         {
-            animator.SetBool(run, false);
-            animator.SetBool(idle, true);
+            if(velocity.y > 0.01f)
+            {
+                animator.SetBool(jump, true);
+                animator.SetBool(idle, false);
+                animator.SetBool(move, false);
+                animator.SetBool(fall, false);
+            }
+            else if(velocity.y < -0.01f)
+            {
+                animator.SetBool(jump, false);
+                animator.SetBool(idle, false);
+                animator.SetBool(move, false);
+                animator.SetBool(fall, true);
+            }
+        }
+        if(animator.GetBool(fall) && controller.isGrounded)
+        {
+            animator.SetBool(fall, false);
+            animator.SetBool(land, true);
+            sound.PlayOneShot(landSound);
         }
     }
 }
