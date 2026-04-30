@@ -1,4 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -24,14 +24,17 @@ public class UpdatedCharacterController : MonoBehaviour
         jumpSound,
         doubleJumpSound,
         runStartSound,
-        runStopSound;
+        runStopSound,
+        landSound,
+        deathSound;
     public Vector3 velocity;
     private Transform 
         centerTransform,
         thisTransform;
     private Sprite sprite;
+    private Renderer childRenderer;
     public int jumpCount = 0;
-    private int maxJumps = 2;
+    private int maxJumps = 1;
     public KeyCode right = KeyCode.RightArrow;
     public KeyCode left = KeyCode.LeftArrow;
     public KeyCode run = KeyCode.LeftShift;
@@ -39,8 +42,10 @@ public class UpdatedCharacterController : MonoBehaviour
     public Animator animator;
     public int moveDirection;
     public float friction = 10f;
-    private ParticleSystem jumpParticles;
-
+    private ParticleSystem 
+        jumpParticles,
+        landParticles;
+    public SimpleFloatData health;
     /// <summary>
     /// Initialize required components.
     /// </summary>
@@ -50,7 +55,9 @@ public class UpdatedCharacterController : MonoBehaviour
         thisTransform = transform;
         centerTransform = transform.GetChild(0);
         sound = GetComponent<AudioSource>();
-        jumpParticles = GetComponentInChildren<ParticleSystem>();
+        jumpParticles = transform.Find("DoubleJumpParticle").GetComponent<ParticleSystem>();
+        landParticles = transform.Find("LandParticle").GetComponent<ParticleSystem>();
+        childRenderer = transform.Find("SpriteCenter").GetComponentInChildren<Renderer>();
     }
 
     /// <summary>
@@ -76,10 +83,18 @@ public class UpdatedCharacterController : MonoBehaviour
         {
             sound.PlayOneShot(doubleJumpSound);
             jumpParticles.Emit(50);
+            jumpCount++;
         }
+    }
 
-        jumpCount++;
-        KeepCharacterOnXAxis();
+    if (health.value <= 0)
+    {
+        // Handle character death (play animation, disable controls, etc.)
+        animator.SetTrigger("Die");
+        sound.PlayOneShot(deathSound);
+        enabled = false; // Disable this script to stop further movement
+        StartCoroutine(HandleDeath());
+        return;
     }
 
     velocity.x += moveDirection * moveSpeed * 10f * Time.deltaTime;
@@ -87,8 +102,12 @@ public class UpdatedCharacterController : MonoBehaviour
     controller.Move(velocity * Time.deltaTime);
     velocity.x *= Mathf.Exp(-friction * Time.deltaTime);
 
-    if (controller.isGrounded)
+    if (animator.GetBool("Fall") && controller.isGrounded)
+    {
+        sound.PlayOneShot(landSound);
         jumpCount = 0;
+        landParticles.Emit(10);
+    }
 
     if (Input.GetKeyDown(run))
     {
@@ -106,11 +125,18 @@ public class UpdatedCharacterController : MonoBehaviour
         centerTransform.localScale = new Vector3(1f, 1f, 1f); // reset scale when not running
         animator.SetFloat("RunSpeed", 1f);
     }
+    KeepCharacterOnXAxis();
 }
 
     /// <summary>
     /// Ensures the character remains on the x-axis.
     /// </summary>
+    IEnumerator HandleDeath()
+    {
+        yield return new WaitForSeconds(.916f);
+        childRenderer.enabled = false;
+    }
+    
     private void KeepCharacterOnXAxis()
     {
         // Lock the z-axis position to maintain 2D movement

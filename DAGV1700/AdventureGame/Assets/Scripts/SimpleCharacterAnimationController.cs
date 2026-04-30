@@ -5,8 +5,6 @@ public class SimpleCharacterAnimationController : MonoBehaviour
     public CharacterController controller;
     public UpdatedCharacterController player;
     private Animator animator;
-    public AudioClip landSound;
-    private AudioSource sound;
     private readonly int 
         move = Animator.StringToHash("Move"),
         idle = Animator.StringToHash("Idle"),
@@ -18,7 +16,6 @@ public class SimpleCharacterAnimationController : MonoBehaviour
     {
         // Cache the Animator component attached to CharacterArt
         animator = GetComponent<Animator>();
-        sound = GetComponentInParent<AudioSource>();
     }
 
     private void Update()
@@ -66,7 +63,6 @@ public class SimpleCharacterAnimationController : MonoBehaviour
         {
             animator.SetBool(fall, false);
             animator.SetBool(land, true);
-            sound.PlayOneShot(landSound);
         }
     }
 }
