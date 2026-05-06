@@ -16,7 +16,7 @@ public class ScoreAddBehavior : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            score.UpdateValue(score.Value + 1);
+            score.UpdateValue(1);
             sound.PlayOneShot(coinSound);
             // Hide object immediately
             GetComponent<SpriteRenderer>().enabled = false;

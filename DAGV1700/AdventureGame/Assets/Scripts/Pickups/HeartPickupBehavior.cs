@@ -5,7 +5,7 @@ public class HealthAddBehavior : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public SimpleFloatData health;
-    public float healAmount = .2f;
+    public float healAmount = .3f;
     private AudioSource sound;
     public AudioClip healSound;
     void Start()

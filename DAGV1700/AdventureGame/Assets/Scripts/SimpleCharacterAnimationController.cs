@@ -50,6 +50,7 @@ public class SimpleCharacterAnimationController : MonoBehaviour
                 animator.SetBool(idle, false);
                 animator.SetBool(move, false);
                 animator.SetBool(fall, false);
+                animator.SetBool(land, false);
             }
             else if(velocity.y < -0.01f)
             {
@@ -57,11 +58,13 @@ public class SimpleCharacterAnimationController : MonoBehaviour
                 animator.SetBool(idle, false);
                 animator.SetBool(move, false);
                 animator.SetBool(fall, true);
+                animator.SetBool(land, false);
             }
         }
-        if(animator.GetBool(fall) && controller.isGrounded)
+        if((animator.GetBool(fall) || animator.GetBool(jump)) && controller.isGrounded)
         {
             animator.SetBool(fall, false);
+            animator.SetBool(jump, false);
             animator.SetBool(land, true);
         }
     }
